@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: seccomp-profile-installer
+spec:
+  template:
+    spec:
+      serviceAccountName: seccomp-profile-installer
+      containers:
+        - name: installer
+          image: docker.io/alpine:latest
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          volumeMounts:
+            - name: seccomp-profiles-host
+              mountPath: /tgt
+            - name: seccomp-profiles-src
+              mountPath: /src
+          command:
+            - /bin/sh
+            - -x
+            - -c
+            - |
+              tar -C /src -cf- . | tar -C /tgt -xf-
+              exec sleep inf
+      volumes:
+        - name: seccomp-profiles-src
+          configMap:
+            name: seccomp-profiles
+        - name: seccomp-profiles-host
+          persistentVolumeClaim:
+            claimName: seccomp-profiles
