@@ -5,10 +5,10 @@ resources:
   - ../../cluster-scope/base/apps/deployment
   - ../../cluster-scope/base/core/serviceaccounts
   - ../../cluster-scope/base/rbac.authorization.k8s.io
-  - ../../cluster-scope/base/security.openshift.io/securitycontextconstraints/allow-personality-scc.yaml
+  - ../../cluster-scope/base/security.openshift.io/securitycontextconstraints
 
 
-  configMapGenerator:
+configMapGenerator:
   - name: watchsa
     files:
       - watchsa.sh
