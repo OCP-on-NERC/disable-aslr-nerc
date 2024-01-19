@@ -28,6 +28,10 @@ spec:
       containers:
         - image: cli
           name: watchsa
+          resources:
+            limits: 
+              cpu: 500m
+              memory: 512Mi
           env:
             - name: NAMESPACE
               valueFrom:
