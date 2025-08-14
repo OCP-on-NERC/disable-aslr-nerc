@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: rhods-notebooks
+resources:
+  - ../../cluster-scope/base/apps/deployment
+  - ../../cluster-scope/base/core/serviceaccounts
+  - ../../cluster-scope/base/rbac.authorization.k8s.io
+  - ../../cluster-scope/base/security.openshift.io/securitycontextconstraints
+
+
+configMapGenerator:
+  - name: watchsa
+    files:
+      - watchsa.sh
